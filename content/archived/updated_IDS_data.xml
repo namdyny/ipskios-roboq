@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<us-ids date-produced="20050902" dtd-version="v20_EFSWeb" file="" lang="" status="">
+    <us-filing-info>
+        <us-application-identification-info>
+            <doc-number>12345678</doc-number>
+            <date>1990-01-01</date>
+        </us-application-identification-info>
+        <us-first-named-inventor>
+            <name name-type="">Lorem Ipsum</name>
+        </us-first-named-inventor>
+        <file-reference-id>1234-5678</file-reference-id>
+        <us-group-art-unit>bb</us-group-art-unit>
+        <primary-examiner>
+            <name name-type="">Ipsum Lorem</name>
+            <electronic-signature date="" place-signed="">
+            <basic-signature>
+                <text-string/>
+                </basic-signature>
+            </electronic-signature>
+        </primary-examiner>
+    </us-filing-info>
+    
+    <us-ids-certification text="1"
+><us-foreign-pat-office-citation text="1"
+/><us-new-findings text="0"
+/><us-certification-statement-attached boilerplate-text="0" file="" type=""
+/><us-fee-submitted boilerplate-text="0"
+/><applicant-name
+><name name-type=""
+>HIJ KLM</name
+><registered-number
+>12345</registered-number
+></applicant-name
+><electronic-signature date="2021-07-11" place-signed=""
+><basic-signature
+><text-string
+>HIJ KLM</text-string
+></basic-signature
+></electronic-signature
+></us-ids-certification
+><us-patent-cite
+><us-doc-reference id="dd:id_2" num="1" sequence=""
+><doc-number
+>12345678</doc-number
+><name name-type=""
+>abc,&#xD;def</name
+><kind
+>A1</kind
+><date
+>2021-01-07</date
+><class
+/><subclass
+/><relevant-portion
+>column 3,&#xD;page 3</relevant-portion
+></us-doc-reference
+><us-doc-reference id="dd:id_2" num="2" sequence=""
+><doc-number
+>87654321</doc-number
+><name name-type=""
+>def,&#xD;abc</name
+><kind
+>B1</kind
+><date
+>2021-07-01</date
+><class
+/><subclass
+/><relevant-portion
+>page 1,&#xD;column 7</relevant-portion
+></us-doc-reference
+></us-patent-cite
+><us-pub-appl-cite
+><us-doc-reference id="dd:id_3" num="1" sequence=""
+><doc-number
+>12345678910</doc-number
+><name name-type=""
+>def,&#xD;abc</name
+><kind
+>A1</kind
+><date
+>2021-07-01</date
+><class
+/><subclass
+/><relevant-portion
+>page 1,&#xD;column 7</relevant-portion
+></us-doc-reference
+><us-doc-reference id="dd:id_3" num="2" sequence=""
+><doc-number
+>10987654321</doc-number
+><name name-type=""
+>abc,&#xD;def</name
+><date
+>2021-01-07</date
+><class
+/><subclass
+/><relevant-portion
+>column 3,&#xD;page 3</relevant-portion
+></us-doc-reference
+></us-pub-appl-cite
+><us-foreign-document-cite
+><us-foreign-doc-reference id="1" num="" sequence="" translation-attached="no"
+><country
+>CN</country
+><doc-number
+>abcdef</doc-number
+><kind
+>A1</kind
+><name name-type=""
+>hij,&#xD;klm</name
+><date
+>2021-05-01</date
+><class
+/><subclass
+/><relevant-portion
+>page 1-3,&#xD;column 4-7</relevant-portion
+></us-foreign-doc-reference
+><us-foreign-doc-reference id="2" num="" sequence="" translation-attached="yes"
+><country
+>EP</country
+><doc-number
+>hijklm</doc-number
+><kind
+>B1</kind
+><name name-type=""
+>klm,&#xD;hij</name
+><date
+>2021-01-05</date
+><class
+/><subclass
+/><relevant-portion
+>column 4-7,&#xD;page 1-3</relevant-portion
+></us-foreign-doc-reference
+></us-foreign-document-cite
+><us-nplcit file="" id="1" medium="" num="" sequence="" translation-attached="no" type="" url=""
+><text
+>abc</text
+></us-nplcit
+><us-nplcit file="" id="2" medium="" num="" sequence="" translation-attached="no" type="" url=""
+><text
+>def</text
+></us-nplcit
+><version-info
+>1.0</version-info
+><clientversion
+/><numofpages
+/></us-ids
+>

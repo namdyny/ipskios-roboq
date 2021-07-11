@@ -1,141 +1,182 @@
-import time
+from posixpath import basename
+import pandas as pd
 import pyautogui
 import subprocess
-import pandas as pd
+import os
+import json
+from dict2xml import dict2xml
 
-'''
-development notes:
-    - require checking on page break
-    - checking on T5 box
-    - number of tabs and shift tabs
-    - reusing filling_top_info()
-'''
-
-def tab_sleep():
-    '''
-    function for tab-sleep shortcut
-    '''
-    pyautogui.press('tab')
-    time.sleep(0.1)
-
-def open_updated_ids(path_uspto_ids):
-    '''
-    function to open USPTO IDS pdf file
-    '''
-    # open pdf with default application - Acrobat 9 (latest supportted version)
-    subprocess.Popen(
-        ['xdg-open {}'.format(path_uspto_ids)],
-        shell=True # shell set to True, otherwise error
-    )
-    # normal time to open pdf
-    time.sleep(2)
-
-def filling_top_info(data):
-    '''
-    function to fill in application_number, filing_date and first_named_inventor
-    parameters:    
-        data: pd.Dataframe with columns listed in col_list
-    '''
-    # move to 1, 1 pixel for safe robot action
-    pyautogui.moveTo(1, 1)
-    tab_sleep()
-    # list of info for part 1
-    col_list = ['application_number', 'filing_date', 'first_named_inventor']
-    # filing in part 1
-    for col in col_list:
-        pyautogui.press(list(data[col][0]))
-        tab_sleep()
-    # made ready for part - US Patents
-    for i in range(2):
-        tab_sleep()
-
-def filling_us_patent_info(data):
-    '''
-    function to fill in US patent and US application
-    parameters:    
-        data: pd.Dataframe with columns listed in col_list
-    '''
-    # both part - US Patents and US Patent Application Publications require 4 tabs
-    for i in range(4):
-        tab_sleep()
+class FormData:
     
-    for e, row in enumerate(range(len(data))):
-        # both part - US Patents and US Patent Application Publications share the same column structure
-        col_list = ['patent_number', 'kind_code', 'issue_date', 'applicant_name', 'content_related']
-        for col in col_list:
-            pyautogui.press(list(data[col][row]))
-            tab_sleep()
-        if e+1 != len(data):
-            pyautogui.press('enter')
-            for i in range(5):
-                pyautogui.hotkey('shift', 'tab')
-                time.sleep(0.1)
-
-def filling_foreign_application(data):
     '''
-    function to fill in foreign patent application
-    parameters:    
-        data: pd.Dataframe with columns listed in col_list
-    '''
-    # both part - US Patents and US Patent Application Publications require 4 tabs
-    for i in range(5):
-        tab_sleep()
     
-    for e, row in enumerate(range(len(data))):
-        # both part - US Patents and US Patent Application Publications share the same column structure
-        col_list = ['patent_number', 'country_code', 'kind_code', 'issue_date', 'applicant_name', 'content_related']
-        for col in col_list:
-            pyautogui.press(list(data[col][row]))
-            tab_sleep()
-        if e+1 != len(data):
-            pyautogui.press('enter')
-            for i in range(6):
-                pyautogui.hotkey('shift', 'tab')
-                time.sleep(0.1)
+    '''
 
-open_updated_ids(
-    path_uspto_ids='/home/namdyny/Desktop/temp_git_repositories/ipskios-roboq/content/updated_IDS.pdf'
-)
+    def __init__(self, path, *args, **kwargs):
+        self.path = path
+        self.args = args
+        self.kwargs = kwargs
 
-df_basic_info = pd.DataFrame(
-    data={
-        'application_number': ['87654321'],
-        'filing_date': ['2020-12-31'],
-        'first_named_inventor': ['ABCDEFG'],
-    }
-)
-filling_top_info(df_basic_info)
+    def open_ids_excel(self):
+        '''
+        aim: read all sheets from the template excel
+        '''
+        def read_into_df(self, sheet_list):
+            for sheet in sheet_list:
+                df = pd.read_excel(
+                    self.path,
+                    sheet_name=sheet,
+                    dtype=str
+                ).fillna('')    # fillna() to replace nan with ''
+                self.kwargs[str('df-' + sheet)] = df
+        sheet_list = ['us-filing-info', 'us-patent-cite', 'us-pub-appl-cite', 'us-foreign-document-cite', 'us-nplcit', 'us-ids-certification']
+        read_into_df(self, sheet_list)
 
-df_us_granted = pd.DataFrame(
-    data={
-        'patent_number': ['12345678', '87654321'],
-        'kind_code': ['A1', 'A2'],
-        'issue_date': ['2021-01-01', '2021-06-01'],
-        'applicant_name': ['ABC ltd.', 'DEF Co., Ltd.'],
-        'content_related': ['page 1 column 10-11, claims 1-3', 'page 2, column 7-9, claims 4-6'],
-    }
-)
-filling_us_patent_info(data=df_us_granted)
+    def create_backbone(self):
+        data = {
+            'us-ids': {},
+            'version-info': '1.0',
+            '_date-produced': '20050902',
+            '_dtd-version': 'v20_EFSWeb',
+            '_file': '',
+            '_lang': '',
+            '_status': ''
+        }
+        self.kwargs['base_data'] = {
+            'us-ids': data
+        }
+    
+    def create_us_filing_info(self):
+        '''
+        create dict['us-filing-info']
+        '''
+        df = self.kwargs['df-us-filing-info']
+        data = {
+            'us-application-identification-info':{
+                'doc-number': df['doc-number'][0],
+                'date': df['date'][0]
+            },
+            'us-first-named-inventor': {
+                'name': {
+                    '_name-type': '',
+                    '__text': df['us-first-named-inventor'][0]
+                },
+            },
+            'primary-examiner': {
+                'name': {
+                    '_name-type': '',
+                    '__text': df['primary-examiner'][0]
+                },
+                'electronic-signature': {
+                    'basic-signature': {
+                        'text-string': ''
+                    },
+                    '_date': '',
+                    '_place-signed': ''
+                }
+            },
+            'file-reference-id': df['file-reference-id'][0],
+            'us-group-art-unit': df['us-group-art-unit'][0]
+        }
+        self.kwargs['base_data']['us-ids']['us-filing-info'] = data
 
-df_us_application = pd.DataFrame(
-    data={
-        'patent_number': ['12345678910', '10987654321'],
-        'kind_code': ['B1', 'B2'],
-        'issue_date': ['2021-07-01', '2021-07-02'],
-        'applicant_name': ['HIJ ltd.', 'KLM Co., Ltd.'],
-        'content_related': ['page 7 column 3-4, claims 8-9', 'page 5, column 7, claims 3-4'],
-    }
-)
-filling_us_patent_info(data=df_us_application)
+    def create_certification(self):
+        df = self.kwargs['df-us-ids-certification']
+        if len(df) != 0:
+            data ={
+                'applicant-name': {
+                    'name': {
+                        '_name-type': '',
+                        '__text': df['name'][0]
+                    },
+                    'registered-number': df['registered-number'][0]
+                },
+            }
+            self.kwargs['base_data']['us-ids']['us-ids-certification'] = data
 
-df_foreign_application = pd.DataFrame(
-    data={
-        'patent_number': ['12345678910A', '10987654321B'],
-        'country_code': ['CN', 'GB'],
-        'kind_code': ['B1', 'B2'],
-        'issue_date': ['2021-03-01', '2021-04-02'],
-        'applicant_name': ['XYZ ltd.', 'ZYX Co., Ltd.'],
-        'content_related': ['page 5 column 3-7, claims 8-11', 'page 6, column 5, claims 1-4'],
-    }
-)
-filling_foreign_application(df_foreign_application)
+    def create_patent_cite(self):
+        sheet_list = ['us-patent-cite', 'us-pub-appl-cite', 'us-foreign-document-cite']
+        for sheet in sheet_list:
+            df = self.kwargs[str('df-' + sheet)]
+            doc_reference = []
+            if len(df) != 0:
+                for row in range(len(df)):
+                    if sheet == 'us-patent-cite':
+                        id = 'dd: id_2'
+                        num = str(row + 1)
+                    elif sheet == 'us-pub-appl-cite':
+                        id = 'dd: id_3'
+                        num = str(row + 1)
+                    else:
+                        id = str(row + 1)
+                        num = ''
+                    instance = {
+                        'doc-number': df['doc-number'][row],
+                        'name': {
+                            '_name-type': '',
+                            '__text': df['name'][row]
+                        },
+                        'kind': df['kind'][row],
+                        'date': df['date'][row],
+                        'class': '',
+                        'subclass': '',
+                        'relevant-portion': df['relevant-portion'][row],
+                        '_id': id,
+                        '_num': num,
+                        '_sequence': ''
+                    }
+                    if sheet == 'us-foreign-document-cite':
+                        instance['country'] = df['country'][row]
+                        if df['_translation-attached'][row] != '':
+                            instance['_translation-attached'] = 'yes'
+                        else:
+                            instance['_translation-attached'] = 'no'
+                    doc_reference.append(instance)
+                if sheet != 'us-foreign-document-cite':
+                    data = {
+                        'us-doc-reference': doc_reference
+                    }
+                else:
+                    data = {
+                        'us-foreign-doc-reference': doc_reference
+                    }
+                self.kwargs['base_data']['us-ids'][sheet] = data
+    
+    def create_non_patent_cite(self):
+        df = self.kwargs[str('df-us-nplcit')]
+        us_nplcit = []
+        if len(df) != 0:
+            for row in range(len(df)):
+                instance = {
+                    'text': df['text'][row],
+                    '_file': '',
+                    '_id': str(row + 1),
+                    '_medium': '',
+                    '_num': '',
+                    '_sequence': '',
+                    '_type': '',
+                    '_url': '',
+                }
+                if df['_translation-attached'][row] != '':
+                    instance['_translation-attached'] = 'yes'
+                else:
+                    instance['_translation-attached'] = 'no'
+                us_nplcit.append(instance)
+            self.kwargs['base_data']['us-ids']['us-nplcit'] = us_nplcit
+
+
+base_folder = str(os.path.dirname(os.path.realpath(__file__)))
+
+ids_excel = base_folder + '/ids_excel_template.xlsx')
+form_data = FormData(path=ids_excel)
+form_data.open_ids_excel()
+form_data.create_backbone()
+form_data.create_us_filing_info()
+form_data.create_certification()
+form_data.create_patent_cite()
+form_data.create_non_patent_cite()
+xml_output = '<?xml version="1.0" encoding="UTF-8"?>\n'
+xml_output = xml_output+ dict2xml(form_data.kwargs['base_data'], wrap='', indent='  ')
+
+with open('{}/output_xml/output.xml'.format(base_folder), 'w') as xml_file:
+    xml_file.write(xml_output)

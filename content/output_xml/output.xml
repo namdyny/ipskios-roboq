@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<us-ids>
+  <_date-produced>20050902</_date-produced>
+  <_dtd-version>v20_EFSWeb</_dtd-version>
+  <_file></_file>
+  <_lang></_lang>
+  <_status></_status>
+  <us-filing-info>
+    <file-reference-id>1234-5678</file-reference-id>
+    <primary-examiner>
+      <electronic-signature>
+        <_date></_date>
+        <_place-signed></_place-signed>
+        <basic-signature>
+          <text-string></text-string>
+        </basic-signature>
+      </electronic-signature>
+      <name>
+        <__text>Ipsum Lorem</__text>
+        <_name-type></_name-type>
+      </name>
+    </primary-examiner>
+    <us-application-identification-info>
+      <date>1990-01-01</date>
+      <doc-number>12345678</doc-number>
+    </us-application-identification-info>
+    <us-first-named-inventor>
+      <name>
+        <__text>Lorem Ipsum</__text>
+        <_name-type></_name-type>
+      </name>
+    </us-first-named-inventor>
+    <us-group-art-unit>bbb</us-group-art-unit>
+  </us-filing-info>
+  <us-foreign-document-cite>
+    <us-foreign-doc-reference>
+      <_id>1</_id>
+      <_num></_num>
+      <_sequence></_sequence>
+      <_translation-attached>no</_translation-attached>
+      <class></class>
+      <country>CN</country>
+      <date>1900-01-01</date>
+      <doc-number>12345678910</doc-number>
+      <kind>B1</kind>
+      <name>
+        <__text>DEF Co., Ltd</__text>
+        <_name-type></_name-type>
+      </name>
+      <relevant-portion>page 7, column 1</relevant-portion>
+      <subclass></subclass>
+    </us-foreign-doc-reference>
+    <us-foreign-doc-reference>
+      <_id>2</_id>
+      <_num></_num>
+      <_sequence></_sequence>
+      <_translation-attached>yes</_translation-attached>
+      <class></class>
+      <country>EP</country>
+      <date>1900-01-01</date>
+      <doc-number>10987654321</doc-number>
+      <kind>A1</kind>
+      <name>
+        <__text>ABC Ltd</__text>
+        <_name-type></_name-type>
+      </name>
+      <relevant-portion>page 1, column 7</relevant-portion>
+      <subclass></subclass>
+    </us-foreign-doc-reference>
+  </us-foreign-document-cite>
+  <us-ids></us-ids>
+  <us-ids-certification>
+    <applicant-name>
+      <name>
+        <__text>XYZ</__text>
+        <_name-type></_name-type>
+      </name>
+      <registered-number>1234-78910</registered-number>
+    </applicant-name>
+    <electronic-signature>
+      <_date>2021-07-01</_date>
+      <_place-signed></_place-signed>
+      <basic-signature>
+        <text-string></text-string>
+      </basic-signature>
+    </electronic-signature>
+  </us-ids-certification>
+  <us-nplcit>
+    <_file></_file>
+    <_id>1</_id>
+    <_medium></_medium>
+    <_num></_num>
+    <_sequence></_sequence>
+    <_translation-attached>yes</_translation-attached>
+    <_type></_type>
+    <_url></_url>
+    <text>ABC, DE., 1990, Abc, Def, 3(2), pp. 1-10. Available at:</text>
+  </us-nplcit>
+  <us-patent-cite>
+    <us-doc-reference>
+      <_id>dd: id_2</_id>
+      <_num>1</_num>
+      <_sequence></_sequence>
+      <class></class>
+      <date>1900-01-01</date>
+      <doc-number>12345678</doc-number>
+      <kind>A1</kind>
+      <name>
+        <__text>ABC Ltd</__text>
+        <_name-type></_name-type>
+      </name>
+      <relevant-portion>page 1, column 7</relevant-portion>
+      <subclass></subclass>
+    </us-doc-reference>
+    <us-doc-reference>
+      <_id>dd: id_2</_id>
+      <_num>2</_num>
+      <_sequence></_sequence>
+      <class></class>
+      <date>1900-01-01</date>
+      <doc-number>87654321</doc-number>
+      <kind>B1</kind>
+      <name>
+        <__text>DEF Co., Ltd</__text>
+        <_name-type></_name-type>
+      </name>
+      <relevant-portion>page 7, column 1</relevant-portion>
+      <subclass></subclass>
+    </us-doc-reference>
+  </us-patent-cite>
+  <us-pub-appl-cite>
+    <us-doc-reference>
+      <_id>dd: id_3</_id>
+      <_num>1</_num>
+      <_sequence></_sequence>
+      <class></class>
+      <date>1900-01-01</date>
+      <doc-number>12345678910</doc-number>
+      <kind>B1</kind>
+      <name>
+        <__text>DEF Co., Ltd</__text>
+        <_name-type></_name-type>
+      </name>
+      <relevant-portion>page 7, column 1</relevant-portion>
+      <subclass></subclass>
+    </us-doc-reference>
+    <us-doc-reference>
+      <_id>dd: id_3</_id>
+      <_num>2</_num>
+      <_sequence></_sequence>
+      <class></class>
+      <date>1900-01-01</date>
+      <doc-number>10987654321</doc-number>
+      <kind>A1</kind>
+      <name>
+        <__text>ABC Ltd</__text>
+        <_name-type></_name-type>
+      </name>
+      <relevant-portion>page 1, column 7</relevant-portion>
+      <subclass></subclass>
+    </us-doc-reference>
+  </us-pub-appl-cite>
+  <version-info>1.0</version-info>
+</us-ids>
