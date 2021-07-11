@@ -3,13 +3,13 @@ import pandas as pd
 import pyautogui
 import subprocess
 import os
-import json
+import time
 from dict2xml import dict2xml
 
-class FormData:
+class IDSForm:
     
     '''
-    
+
     '''
 
     def __init__(self, path, *args, **kwargs):
@@ -24,7 +24,7 @@ class FormData:
         def read_into_df(self, sheet_list):
             for sheet in sheet_list:
                 df = pd.read_excel(
-                    self.path,
+                    str(self.path + '/ids_excel_template.xlsx'),
                     sheet_name=sheet,
                     dtype=str
                 ).fillna('')    # fillna() to replace nan with ''
@@ -164,11 +164,44 @@ class FormData:
                 us_nplcit.append(instance)
             self.kwargs['base_data']['us-ids']['us-nplcit'] = us_nplcit
 
+    def xml_to_pdf(self):
+        subprocess.Popen(
+            ['xdg-open {}{}'.format(self.path, '/updated_IDS.pdf')],   #xdg-open opens file with the preferred application.
+            shell=True
+        )
+        time.sleep(2)
+        pyautogui.hotkey('alt', 'd')
+        time.sleep(0.1)
+        pyautogui.press('f')
+        time.sleep(0.1)
+        pyautogui.press('enter')
+        time.sleep(0.1)
+        pyautogui.press('enter')
+        time.sleep(0.1)
+        pyautogui.hotkey('ctrl', 'shift', 's')
+        time.sleep(0.1)
+        pyautogui.press('down')
+        time.sleep(0.1)
+        pyautogui.press('down')
+        time.sleep(0.1)
+        pyautogui.press('down')
+        time.sleep(0.1)
+        pyautogui.press('down')
+        time.sleep(0.1)
+        pyautogui.press('down')
+        time.sleep(0.1)
+        pyautogui.press('enter')
+        time.sleep(0.1)
+        pyautogui.press('enter')
+        time.sleep(0.5)
+        pyautogui.hotkey('alt', 'f4')
+        time.sleep(0.1)
 
 base_folder = str(os.path.dirname(os.path.realpath(__file__)))
-
-ids_excel = base_folder + '/ids_excel_template.xlsx')
-form_data = FormData(path=ids_excel)
+# ids_excel = base_folder + '/ids_excel_template.xlsx'
+ids_xml_output = base_folder + '/output_xml/output.xml'
+ids_pdf_output = base_folder + '/output_pdf/output.xml'
+form_data = IDSForm(path=base_folder)
 form_data.open_ids_excel()
 form_data.create_backbone()
 form_data.create_us_filing_info()
@@ -178,5 +211,9 @@ form_data.create_non_patent_cite()
 xml_output = '<?xml version="1.0" encoding="UTF-8"?>\n'
 xml_output = xml_output+ dict2xml(form_data.kwargs['base_data'], wrap='', indent='  ')
 
-with open('{}/output_xml/output.xml'.format(base_folder), 'w') as xml_file:
+with open(ids_xml_output, 'w') as xml_file:
     xml_file.write(xml_output)
+
+form_data.xml_to_pdf()
+
+os.remove(ids_xml_output)
