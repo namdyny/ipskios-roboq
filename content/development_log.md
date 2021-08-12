@@ -1,6 +1,7 @@
 
 # Development log
 
+
 ## 2021-07-08
 
 ### progress
@@ -14,7 +15,14 @@
 - number of tabs and shift tabs
 - reusing filling_top_info()
 
+
 ## 2021-07-09
 
 ### progress
 - excel template for inputing data
+
+
+## 2021-07-13
+
+# progress
+- create django for web-roboq
