@@ -1,6 +1,6 @@
 # Project IPSKIOS -- *Roboq*
 
-path to the Django project`ipskios-roboq/content/webapp/mysite/`
+path to the Django project`ipskios-roboq/content/webapp/mysite/webapp_pythonanywhere/`
 
 ## Description
 ### Aims
