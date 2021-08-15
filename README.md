@@ -1,5 +1,6 @@
 # Project IPSKIOS -- *Roboq*
 Copyright 2021 IPSKIOS
+
 License: Proprietary
 
 path to the Django project`ipskios-roboq/content/webapp/mysite/webapp_pythonanywhere/`
